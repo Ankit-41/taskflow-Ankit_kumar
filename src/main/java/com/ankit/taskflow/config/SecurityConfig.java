@@ -3,6 +3,7 @@ package com.ankit.taskflow.config;
 import com.ankit.taskflow.security.JwtAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -54,10 +55,13 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    private void writeJson(HttpServletResponse response, int status, Map<String, Object> payload) throws Exception {
+    private void writeJson(HttpServletResponse response, int status, Map<String, Object> payload) {
         response.setStatus(status);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        objectMapper.writeValue(response.getOutputStream(), payload);
+        try {
+            objectMapper.writeValue(response.getOutputStream(), payload);
+        } catch (IOException exception) {
+            throw new IllegalStateException("Failed to write security error response", exception);
+        }
     }
 }
-
