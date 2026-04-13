@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: taskflow
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/taskflow}
+    username: ${DB_USER:taskflow}
+    password: ${DB_PASSWORD:taskflow}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2s
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+
+spring.lifecycle:
+  timeout-per-shutdown-phase: 20s
+
+logging:
+  level:
+    root: INFO
+    com.ankit.taskflow: INFO
+
+taskflow:
+  security:
+    jwt-secret: ${JWT_SECRET:change-this-to-a-very-long-random-secret-value}
+    jwt-expiration-hours: ${JWT_EXPIRATION_HOURS:24}
+  cache:
+    project-ttl: PT10M
+    task-list-ttl: PT5M
+    idempotency-ttl: PT24H
+
