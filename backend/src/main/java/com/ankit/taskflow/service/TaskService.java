@@ -67,7 +67,6 @@ public class TaskService {
                 .assignee(assignee)
                 .creator(creator)
                 .dueDate(request.dueDate())
-                .version(0)
                 .build();
 
         Task saved = taskRepository.save(task);

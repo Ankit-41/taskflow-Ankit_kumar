@@ -35,6 +35,12 @@ logging:
     root: INFO
     com.ankit.taskflow: INFO
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false
+
 taskflow:
   security:
     jwt-secret: ${JWT_SECRET:change-this-to-a-very-long-random-secret-value}
@@ -43,4 +49,3 @@ taskflow:
     project-ttl: PT10M
     task-list-ttl: PT5M
     idempotency-ttl: PT24H
-
